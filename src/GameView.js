@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import checkIfGameIsWon from "./CheckWins";
+import checkIfGameIsWon from "./utils";
+import Table from "./Table";
+import Header from "./Header";
 
-export default class Game extends Component {
+export default class GameView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,7 +26,7 @@ export default class Game extends Component {
     for (let i = 0; i < gameBoard.length; i++) {
       newBoard[i] = new Array(gameBoard[i].length).fill(null);
     }
-    this.setState({ gameBoard: newBoard });
+    this.setState({ gameBoard: newBoard, currentPlayer: 1, isWon: false });
   };
 
   togglePlayer = () => {
@@ -36,9 +38,9 @@ export default class Game extends Component {
     }
   };
 
-  checkForWin = (x, y) => {
+  checkForWin = (row, column) => {
     const { gameBoard, currentPlayer } = this.state;
-    if (checkIfGameIsWon(x, y, gameBoard, currentPlayer) === true) {
+    if (checkIfGameIsWon(row, column, gameBoard, currentPlayer) === true) {
       this.setState({ isWon: true });
       return true;
     }
@@ -53,35 +55,33 @@ export default class Game extends Component {
   };
 
   dropChecker = (selectedColumn) => {
-    let { gameBoard, isWon, currentPlayer } = this.state;
-    let x, y;
+    const { gameBoard, isWon, currentPlayer } = this.state;
+    const columnIsFull = gameBoard[0][selectedColumn] !== null ? true : false;
+    let gameBoardCopy = gameBoard;
+    let row = gameBoardCopy.length - 1;
+    let nextAvailableSpace;
+
     if (isWon === true) {
-      console.log("game is won cannot continue");
       return;
     }
-    if (gameBoard[0][selectedColumn] !== null) {
-      console.log("column is full!! try again :(");
+    if (columnIsFull) {
       return;
-    } else if (gameBoard[gameBoard.length - 1][selectedColumn] === null) {
-      gameBoard[gameBoard.length - 1][selectedColumn] = currentPlayer;
-      x = gameBoard.length - 1;
-      y = selectedColumn;
     } else {
-      for (let i = 0; i < gameBoard.length; i++) {
-        if (gameBoard[i][selectedColumn] !== null) {
-          gameBoard[i - 1][selectedColumn] = currentPlayer;
-          x = i - 1;
-          y = selectedColumn;
+      while (row >= 0) {
+        if (gameBoardCopy[row][selectedColumn] === null) {
+          nextAvailableSpace = row;
+          gameBoardCopy[nextAvailableSpace][selectedColumn] = currentPlayer;
           break;
         }
+        row--;
       }
-    }
 
-    if (this.checkForWin(x, y) === false) {
-      this.togglePlayer();
-    }
+      if (this.checkForWin(nextAvailableSpace, selectedColumn) === false) {
+        this.togglePlayer();
+      }
 
-    this.setState({ gameBoard });
+      this.setState({ gameBoard: gameBoardCopy });
+    }
   };
 
   randomizer = () => {
@@ -107,64 +107,13 @@ export default class Game extends Component {
   }
 
   render() {
-    let { gameBoard, isWon } = this.state;
-    let currPlayer = this.getCurrentPlayer();
+    const { gameBoard, isWon } = this.state;
+    const currPlayer = this.getCurrentPlayer();
     return (
       <div className="container">
-          <h1>Connect 4</h1>
-        <div className="heading" >
-          {isWon === true ? (
-            <h2>WINNER: {currPlayer}</h2>
-          ) : (
-            <h2>Current Player: {currPlayer}</h2>
-          )}
-        
-        <button onClick={this.reset}>Reset</button>
-        </div>
-        <table>
-          <tbody>
-            {gameBoard.map((row, rowIndex) => {
-              return (
-                <TableRow
-                  key={rowIndex}
-                  row={row}
-                  value={rowIndex}
-                  handleClick={this.handleClick}
-                />
-              );
-            })}
-          </tbody>
-        </table>
+        <Header currPlayer={currPlayer} isWon={isWon} reset={this.reset} />
+        <Table gameBoard={gameBoard} handleClick={this.handleClick} />
       </div>
     );
   }
 }
-
-const TableRow = ({ row, value, handleClick }) => {
-  return (
-    <tr>
-      {row.map((col, colIndex) => (
-        <TableCell
-          key={colIndex}
-          col={col}
-          colIndex={colIndex}
-          handleClick={handleClick}
-        />
-      ))}
-    </tr>
-  );
-};
-
-const TableCell = ({ col, colIndex, handleClick }) => {
-  let color = "white";
-  if (col === 1) {
-    color = "red";
-  } else if (col === 0) {
-    color = "blue";
-  }
-  return (
-    <td value={col} onClick={() => handleClick(colIndex, col)}>
-      <div className={color}></div>
-    </td>
-  );
-};

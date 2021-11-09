@@ -90,7 +90,6 @@ const checkVertical = (row, col, board, currPlayer) => {
 };
 
 const checkIfGameIsWon = (row, col, board, currentPlayer) => {
-    console.log('row, ', col, 'col, ', col)
   if (
     checkBackslashDiagonal(row, col, board, currentPlayer) === 4 ||
     checkForwardSlashDiagonal(row, col, board, currentPlayer) === 4 ||

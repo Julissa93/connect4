@@ -5,22 +5,19 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #cce1f5;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-content: center;
   align-items: center;
   width: 100%;
 }
 
 table {
-  display: table;
   height: 60vh;
   width: 50vw;
   border: 1px solid black;
@@ -28,17 +25,13 @@ table {
   border-radius: 30px;
 }
 
-td {
-  border-spacing: 0;
-}
 
 td {
-  flex-direction: column;
   padding: 10px;
 }
 
 .blue {
-  background-color: rgb(82, 82, 233);
+  background-color: rgb(117, 117, 243);
   transition: background-color 0.5s;
   height: 100px;
   width: 100px;
@@ -46,11 +39,11 @@ td {
 }
 
 .red {
-  background-color: rgb(212, 54, 54);
+  background-color: rgb(204, 66, 66);
   transition: background-color 0.8s;
   height: 100px;
   width: 100px;
-  border-radius: 100px;
+  border-radius: 50%;
 }
 
 .white {
@@ -60,23 +53,23 @@ td {
   border-radius: 100px;
 }
 
-
-tr {
-  flex-direction: row;
+.heading {
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Roboto', sans-serif;
 }
 
-.heading {
+.scoreboard {
   display: flex;
   flex-direction: row;
-  width: 50vw;
-  justify-content: space-between;
-  align-content: space-around;
   align-items: center;
+  justify-content: space-between;
 }
 
-h2 {
+h1 {
+  font-family: 'Roboto', sans-serif;
   text-align: center;
-  align-self: flex-start;
 }
 
 button {
