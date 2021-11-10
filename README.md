@@ -1,5 +1,5 @@
 # Connect 4
-This is a take home project for Robin Games. The project took me about ~25 hours to build. 
+This is a take home project for Robin Games. The project took me about ~25 hours to build. Create React App was used to quickly start up the project. 
 
 # Instructions To Run App On Your Machine
 1. Run `npm i` to install dependancies
