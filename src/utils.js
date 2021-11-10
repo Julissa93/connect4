@@ -8,8 +8,7 @@ const isValidCell = (row, col, board) => {
       return false;
     }
     return true;
-  };
-//backslash diagonal
+};
 const checkBackslashDiagonal = (row, col, board, currPlayer) => {
   let visited = {};
   const checkDiagonalHelper = (row, col) => {
@@ -48,7 +47,6 @@ const checkForwardSlashDiagonal = (row, col, board, currPlacoler) => {
   checkDiagonalHelper(row, col);
   return Object.keys(visited).length;
 };
-
 const checkHorizontal = (row, col, board, currPlayer) => {
   let visited = {};
   const checkHorizontalHelper = (row, col) => {
@@ -68,7 +66,6 @@ const checkHorizontal = (row, col, board, currPlayer) => {
   checkHorizontalHelper(row, col);
   return Object.keys(visited).length;
 };
-
 const checkVertical = (row, col, board, currPlayer) => {
   let visited = {};
   const checkVerticalHelper = (row, col) => {
@@ -84,11 +81,9 @@ const checkVertical = (row, col, board, currPlayer) => {
       checkVerticalHelper(row + 1, col);
     }
   };
-
   checkVerticalHelper(row, col);
   return Object.keys(visited).length;
 };
-
 const checkIfGameIsWon = (row, col, board, currentPlayer) => {
   if (
     checkBackslashDiagonal(row, col, board, currentPlayer) === 4 ||

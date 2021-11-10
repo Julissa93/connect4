@@ -16,7 +16,7 @@ export default class GameView extends Component {
         [null, null, null, null, null, null, null],
         [null, null, null, null, null, null, null],
         [null, null, null, null, null, null, null],
-      ],
+      ]
     };
   }
 
@@ -75,11 +75,9 @@ export default class GameView extends Component {
         }
         row--;
       }
-
       if (this.checkForWin(nextAvailableSpace, selectedColumn) === false) {
         this.togglePlayer();
       }
-
       this.setState({ gameBoard: gameBoardCopy });
     }
   };
@@ -93,7 +91,7 @@ export default class GameView extends Component {
   getCurrentPlayer = () => {
     const { currentPlayer } = this.state;
     if (currentPlayer === 1) {
-      return "Player 1";
+      return "Human";
     } else {
       return "AI";
     }
@@ -102,7 +100,7 @@ export default class GameView extends Component {
   componentDidUpdate(prevState, prevProps) {
     const { currentPlayer } = this.state;
     if (currentPlayer === 0) {
-      setTimeout(() => this.randomizer(), 3000);
+      setTimeout(() => this.randomizer(), 2000);
     }
   }
 
